@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>COSMOS — Realistic Solar System</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================= -->
+<!-- LOADING -->
+<!-- ================================================= -->
+
+<div id="loading">
+
+    <div class="loading-logo">
+        COSMOS
+    </div>
+
+    <div class="loading-sub">
+        REALISTIC SOLAR SYSTEM SIMULATION
+    </div>
+
+    <div class="loading-line">
+        <div id="loadingBar"></div>
+    </div>
+
+    <div id="loadingText">
+        INITIALIZING...
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- INTRO -->
+<!-- ================================================= -->
+
+<div id="intro">
+
+    <div class="intro-box">
+
+        <div class="intro-label">
+            HUMANITY'S WINDOW INTO SPACE
+        </div>
+
+        <h1>COSMOS</h1>
+
+        <p>
+            Explore a visually realistic 3D recreation
+            of our Solar System.
+        </p>
+
+        <button id="enter">
+            ENTER THE UNIVERSE
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- TOP HUD -->
+<!-- ================================================= -->
+
+<header id="hud">
+
+    <div class="logo">
+        <span></span>
+        COSMOS
+    </div>
+
+    <div class="simulation-status">
+        <i></i>
+        SOLAR SYSTEM SIMULATION
+    </div>
+
+    <button id="help">
+        ?
+    </button>
+
+</header>
+
+
+<!-- ================================================= -->
+<!-- PLANET NAVIGATION -->
+<!-- ================================================= -->
+
+<div id="navigation">
+
+    <div class="nav-title">
+        SOLAR SYSTEM
+    </div>
+
+    <div class="nav-subtitle">
+        CELESTIAL BODIES
+    </div>
+
+
+    <button data-planet="sun">
+        ☀
+        <span>THE SUN</span>
+    </button>
+
+    <button data-planet="mercury">
+        ●
+        <span>MERCURY</span>
+    </button>
+
+    <button data-planet="venus">
+        ●
+        <span>VENUS</span>
+    </button>
+
+    <button data-planet="earth">
+        🌍
+        <span>EARTH</span>
+    </button>
+
+    <button data-planet="moon">
+        ○
+        <span>MOON</span>
+    </button>
+
+    <button data-planet="mars">
+        ●
+        <span>MARS</span>
+    </button>
+
+    <button data-planet="jupiter">
+        ●
+        <span>JUPITER</span>
+    </button>
+
+    <button data-planet="saturn">
+        ●
+        <span>SATURN</span>
+    </button>
+
+    <button data-planet="uranus">
+        ●
+        <span>URANUS</span>
+    </button>
+
+    <button data-planet="neptune">
+        ●
+        <span>NEPTUNE</span>
+    </button>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- INFORMATION PANEL -->
+<!-- ================================================= -->
+
+<div id="info">
+
+    <button id="closeInfo">
+        ×
+    </button>
+
+    <div class="info-label">
+        CELESTIAL BODY
+    </div>
+
+    <h2 id="planetName">
+        Earth
+    </h2>
+
+    <p id="planetDescription">
+        Our home world.
+    </p>
+
+
+    <div class="stats">
+
+        <div>
+            <small>TYPE</small>
+            <strong id="planetType"></strong>
+        </div>
+
+        <div>
+            <small>DIAMETER</small>
+            <strong id="planetDiameter"></strong>
+        </div>
+
+        <div>
+            <small>DISTANCE</small>
+            <strong id="planetDistance"></strong>
+        </div>
+
+        <div>
+            <small>MOONS</small>
+            <strong id="planetMoons"></strong>
+        </div>
+
+        <div>
+            <small>ROTATION</small>
+            <strong id="planetDay"></strong>
+        </div>
+
+        <div>
+            <small>ORBIT</small>
+            <strong id="planetYear"></strong>
+        </div>
+
+    </div>
+
+
+    <div class="fact">
+
+        <div>
+            DID YOU KNOW?
+        </div>
+
+        <p id="planetFact"></p>
+
+    </div>
+
+
+    <button id="travel">
+        TRAVEL TO WORLD
+        →
+    </button>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- BOTTOM CONTROLS -->
+<!-- ================================================= -->
+
+<div id="controls">
+
+    <div>
+        <b>W A S D</b>
+        MOVE
+    </div>
+
+    <div>
+        <b>MOUSE</b>
+        LOOK
+    </div>
+
+    <div>
+        <b>CLICK</b>
+        INSPECT
+    </div>
+
+    <button id="pause">
+        ⏸ PAUSE
+    </button>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- HELP -->
+<!-- ================================================= -->
+
+<div id="helpPanel">
+
+    <button id="closeHelp">
+        ×
+    </button>
+
+    <h2>MISSION CONTROL</h2>
+
+    <p>
+        Explore the Solar System freely.
+    </p>
+
+    <hr>
+
+    <div>
+        <b>W A S D</b>
+        <span>Move through space</span>
+    </div>
+
+    <div>
+        <b>MOUSE</b>
+        <span>Look around</span>
+    </div>
+
+    <div>
+        <b>CLICK PLANET</b>
+        <span>Open information</span>
+    </div>
+
+    <div>
+        <b>PLANET MENU</b>
+        <span>Travel instantly</span>
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- A-FRAME -->
+<!-- ================================================= -->
+
+<a-scene
+    id="scene"
+
+    renderer="
+        antialias: true;
+        colorManagement: true;
+        physicallyCorrectLights: true
+    "
+
+    background="color: #000005"
+
+    fog="
+        type: exponential;
+        color: #000005;
+        density: 0.00035
+    "
+
+    vr-mode-ui="enabled: false"
+>
+
+
+<!-- ================================================= -->
+<!-- TEXTURE ASSETS -->
+<!-- ================================================= -->
+
+<a-assets>
+
+    <!-- STARFIELD -->
+
+    <img
+        id="stars"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/8k_stars.jpg"
+    >
+
+
+    <!-- SUN -->
+
+    <img
+        id="sunTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_sun.jpg"
+    >
+
+
+    <!-- MERCURY -->
+
+    <img
+        id="mercuryTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_mercury.jpg"
+    >
+
+
+    <!-- VENUS -->
+
+    <img
+        id="venusTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_venus_surface.jpg"
+    >
+
+    <img
+        id="venusAtmosphere"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_venus_atmosphere.jpg"
+    >
+
+
+    <!-- EARTH -->
+
+    <img
+        id="earthTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_earth_daymap.jpg"
+    >
+
+    <img
+        id="earthClouds"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_earth_clouds.jpg"
+    >
+
+    <img
+        id="earthNight"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_earth_nightmap.jpg"
+    >
+
+
+    <!-- MOON -->
+
+    <img
+        id="moonTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_moon.jpg"
+    >
+
+
+    <!-- MARS -->
+
+    <img
+        id="marsTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_mars.jpg"
+    >
+
+
+    <!-- JUPITER -->
+
+    <img
+        id="jupiterTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_jupiter.jpg"
+    >
+
+
+    <!-- SATURN -->
+
+    <img
+        id="saturnTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_saturn.jpg"
+    >
+
+    <img
+        id="saturnRing"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_saturn_ring_alpha.png"
+    >
+
+
+    <!-- URANUS -->
+
+    <img
+        id="uranusTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_uranus.jpg"
+    >
+
+
+    <!-- NEPTUNE -->
+
+    <img
+        id="neptuneTexture"
+        crossorigin="anonymous"
+        src="https://www.solarsystemscope.com/textures/download/2k_neptune.jpg"
+    >
+
+</a-assets>
+
+
+<!-- ================================================= -->
+<!-- CAMERA -->
+<!-- ================================================= -->
+
+<a-camera
+    id="camera"
+
+    position="0 6 34"
+
+    wasd-controls="
+        acceleration: 25;
+        fly: true
+    "
+
+    look-controls="
+        pointerLockEnabled: false
+    "
+
+    near="0.01"
+    far="5000"
+>
+</a-camera>
+
+
+<!-- ================================================= -->
+<!-- REAL SPACE BACKGROUND -->
+<!-- ================================================= -->
+
+<a-sky
+    src="#stars"
+    rotation="0 -90 0"
+    material="
+        shader: flat;
+        side: back
+    "
+>
+</a-sky>
+
+
+<!-- ================================================= -->
+<!-- NEBULAS -->
+<!-- ================================================= -->
+
+<a-entity id="nebulae">
+
+    <a-sphere
+        position="-80 30 -150"
+        radius="60"
+        material="
+            color: #402070;
+            opacity: 0.035;
+            transparent: true;
+            shader: flat
+        "
+    ></a-sphere>
+
+
+    <a-sphere
+        position="100 -30 -180"
+        radius="80"
+        material="
+            color: #164f85;
+            opacity: 0.025;
+            transparent: true;
+            shader: flat
+        "
+    ></a-sphere>
+
+
+    <a-sphere
+        position="-120 -40 80"
+        radius="50"
+        material="
+            color: #742f48;
+            opacity: 0.025;
+            transparent: true;
+            shader: flat
+        "
+    ></a-sphere>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- SUN -->
+<!-- ================================================= -->
+
+<a-entity
+    id="sun"
+    class="celestial"
+    position="0 5 -10"
+>
+
+    <!-- REAL SUN TEXTURE -->
+
+    <a-sphere
+        radius="3.4"
+
+        material="
+            src: #sunTexture;
+            shader: standard;
+            emissive: #ff8a00;
+            emissiveIntensity: 1.8;
+            roughness: 0.4
+        "
+    ></a-sphere>
+
+
+    <!-- GLOW 1 -->
+
+    <a-sphere
+        radius="3.8"
+
+        material="
+            color: #ff9d00;
+            transparent: true;
+            opacity: 0.12;
+            shader: flat;
+            side: back
+        "
+    ></a-sphere>
+
+
+    <!-- GLOW 2 -->
+
+    <a-sphere
+        radius="4.5"
+
+        material="
+            color: #ff6200;
+            transparent: true;
+            opacity: 0.055;
+            shader: flat;
+            side: back
+        "
+    ></a-sphere>
+
+
+    <!-- SUN LIGHT -->
+
+    <a-light
+        type="point"
+        color="#fff1c4"
+        intensity="15"
+        distance="250"
+        decay="1.2"
+    ></a-light>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- ORBIT PATHS -->
+<!-- ================================================= -->
+
+<a-entity
+    id="orbits"
+    position="0 5 -10"
+>
+
+    <a-ring
+        radius-inner="7.4"
+        radius-outer="7.42"
+        rotation="-90 0 0"
+        material="
+            color: #ffffff;
+            opacity: 0.10;
+            transparent: true;
+            shader: flat
+        "
+    ></a-ring>
+
+
+    <a-ring
+        radius-inner="10"
+        radius-outer="10.02"
+        rotation="-90 0 0"
+        material="
+            color: #ffffff;
+            opacity: 0.09;
+            transparent: true;
+            shader: flat
+        "
+    ></a-ring>
+
+
+    <a-ring
+        radius-inner="13"
+        radius-outer="13.02"
+        rotation="-90 0 0"
+        material="
+            color: #ffffff;
+            opacity: 0.09;
+            transparent: true;
+            shader: flat
+        "
+    ></a-ring>
+
+
+    <a-ring
+        radius-inner="17"
+        radius-outer="17.02"
+        rotation="-90 0 0"
+        material="
+            color: #ffffff;
+            opacity: 0.08;
+            transparent: true;
+            shader: flat
+        "
+    ></a-ring>
+
+
+    <a-ring
+        radius-inner="22"
+        radius-outer="22.02"
+        rotation="-90 0 0"
+        material="
+            color: #ffffff;
+            opacity: 0.07;
+            transparent: true;
+            shader: flat
+        "
+    ></a-ring>
+
+
+    <a-ring
+        radius-inner="27"
+        radius-outer="27.02"
+        rotation="-90 0 0"
+        material="
+            color: #ffffff;
+            opacity: 0.065;
+            transparent: true;
+            shader: flat
+        "
+    ></a-ring>
+
+
+    <a-ring
+        radius-inner="32"
+        radius-outer="32.02"
+        rotation="-90 0 0"
+        material="
+            color: #ffffff;
+            opacity: 0.06;
+            transparent: true;
+            shader: flat
+        "
+    ></a-ring>
+
+
+    <a-ring
+        radius-inner="37"
+        radius-outer="37.02"
+        rotation="-90 0 0"
+        material="
+            color: #ffffff;
+            opacity: 0.05;
+            transparent: true;
+            shader: flat
+        "
+    ></a-ring>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- MERCURY -->
+<!-- ================================================= -->
+
+<a-entity
+    id="mercuryOrbit"
+    position="0 5 -10"
+>
+
+    <a-sphere
+        id="mercury"
+        class="celestial"
+        position="7.5 0 0"
+        radius="0.38"
+
+        material="
+            src: #mercuryTexture;
+            roughness: 1;
+            metalness: 0
+        "
+    ></a-sphere>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- VENUS -->
+<!-- ================================================= -->
+
+<a-entity
+    id="venusOrbit"
+    position="0 5 -10"
+>
+
+    <a-sphere
+        id="venus"
+        class="celestial"
+        position="10 0 0"
+        radius="0.66"
+
+        material="
+            src: #venusTexture;
+            roughness: 0.9
+        "
+    ></a-sphere>
+
+
+    <!-- ATMOSPHERE -->
+
+    <a-sphere
+        position="10 0 0"
+        radius="0.75"
+
+        material="
+            src: #venusAtmosphere;
+            transparent: true;
+            opacity: 0.22;
+            side: back
+        "
+    ></a-sphere>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- EARTH -->
+<!-- ================================================= -->
+
+<a-entity
+    id="earthOrbit"
+    position="0 5 -10"
+>
+
+    <a-entity
+        id="earth"
+        class="celestial"
+        position="13 0 0"
+    >
+
+        <!-- EARTH SURFACE -->
+
+        <a-sphere
+            radius="0.86"
+
+            material="
+                src: #earthTexture;
+                roughness: 0.8;
+                metalness: 0
+            "
+        ></a-sphere>
+
+
+        <!-- EARTH CLOUDS -->
+
+        <a-sphere
+            radius="0.895"
+
+            material="
+                src: #earthClouds;
+                transparent: true;
+                opacity: 0.65;
+                roughness: 0.4;
+                side: front
+            "
+        ></a-sphere>
+
+
+        <!-- EARTH ATMOSPHERE -->
+
+        <a-sphere
+            radius="0.98"
+
+            material="
+                color: #2d9cff;
+                transparent: true;
+                opacity: 0.13;
+                shader: flat;
+                side: back
+            "
+        ></a-sphere>
+
+
+        <!-- EARTH NIGHT LIGHTS -->
+
+        <a-sphere
+            radius="0.866"
+
+            material="
+                src: #earthNight;
+                transparent: true;
+                opacity: 0.16;
+                roughness: 1
+            "
+        ></a-sphere>
+
+
+        <!-- MOON ORBIT -->
+
+        <a-entity id="moonOrbit">
+
+            <a-sphere
+                id="moon"
+                class="celestial"
+                position="1.9 0 0"
+                radius="0.24"
+
+                material="
+                    src: #moonTexture;
+                    roughness: 1
+                "
+            ></a-sphere>
+
+        </a-entity>
+
+    </a-entity>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- MARS -->
+<!-- ================================================= -->
+
+<a-entity
+    id="marsOrbit"
+    position="0 5 -10"
+>
+
+    <a-sphere
+        id="mars"
+        class="celestial"
+        position="17 0 0"
+        radius="0.56"
+
+        material="
+            src: #marsTexture;
+            roughness: 1
+        "
+    ></a-sphere>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- ASTEROID BELT -->
+<!-- ================================================= -->
+
+<a-entity
+    id="asteroidBelt"
+    position="0 5 -10"
+></a-entity>
+
+
+<!-- ================================================= -->
+<!-- JUPITER -->
+<!-- ================================================= -->
+
+<a-entity
+    id="jupiterOrbit"
+    position="0 5 -10"
+>
+
+    <a-sphere
+        id="jupiter"
+        class="celestial"
+        position="22 0 0"
+        radius="1.8"
+
+        material="
+            src: #jupiterTexture;
+            roughness: 0.9
+        "
+    ></a-sphere>
+
+
+    <!-- JUPITER ATMOSPHERE -->
+
+    <a-sphere
+        position="22 0 0"
+        radius="1.88"
+
+        material="
+            color: #d6a67b;
+            opacity: 0.06;
+            transparent: true;
+            shader: flat;
+            side: back
+        "
+    ></a-sphere>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- SATURN -->
+<!-- ================================================= -->
+
+<a-entity
+    id="saturnOrbit"
+    position="0 5 -10"
+>
+
+    <a-entity
+        id="saturn"
+        class="celestial"
+        position="27 0 0"
+    >
+
+        <!-- SATURN -->
+
+        <a-sphere
+            radius="1.5"
+
+            material="
+                src: #saturnTexture;
+                roughness: 0.95
+            "
+        ></a-sphere>
+
+
+        <!-- MAIN RING -->
+
+        <a-ring
+            rotation="90 0 0"
+
+            radius-inner="1.65"
+            radius-outer="3.4"
+
+            material="
+                src: #saturnRing;
+                transparent: true;
+                side: double
+            "
+        ></a-ring>
+
+
+        <!-- SECONDARY RING -->
+
+        <a-ring
+            rotation="90 0 0"
+
+            radius-inner="3.42"
+            radius-outer="3.85"
+
+            material="
+                color: #b7aa8d;
+                opacity: 0.35;
+                transparent: true;
+                side: double
+            "
+        ></a-ring>
+
+    </a-entity>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- URANUS -->
+<!-- ================================================= -->
+
+<a-entity
+    id="uranusOrbit"
+    position="0 5 -10"
+>
+
+    <a-entity
+        id="uranus"
+        class="celestial"
+        position="32 0 0"
+    >
+
+        <a-sphere
+            radius="1.06"
+
+            material="
+                src: #uranusTexture;
+                roughness: 0.85
+            "
+        ></a-sphere>
+
+
+        <a-ring
+            rotation="90 0 0"
+            radius-inner="1.28"
+            radius-outer="1.5"
+
+            material="
+                color: #8bc9cf;
+                opacity: 0.4;
+                transparent: true;
+                side: double
+            "
+        ></a-ring>
+
+    </a-entity>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- NEPTUNE -->
+<!-- ================================================= -->
+
+<a-entity
+    id="neptuneOrbit"
+    position="0 5 -10"
+>
+
+    <a-sphere
+        id="neptune"
+        class="celestial"
+        position="37 0 0"
+        radius="1.02"
+
+        material="
+            src: #neptuneTexture;
+            roughness: 0.9
+        "
+    ></a-sphere>
+
+</a-entity>
+
+
+<!-- ================================================= -->
+<!-- EXTRA LIGHT -->
+<!-- ================================================= -->
+
+<a-light
+    type="ambient"
+    color="#7895c7"
+    intensity="0.035"
+></a-light>
+
+
+<!-- ================================================= -->
+<!-- STAR PARTICLES -->
+<!-- ================================================= -->
+
+<a-entity id="starParticles"></a-entity>
+
+
+</a-scene>
+
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
